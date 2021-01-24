@@ -1,6 +1,7 @@
-# Netlify + FaunaDB &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-faunadb-example&stack=fauna"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
+# Netlify + FaunaDB (TS) &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/ctjlewis/netlify-fauna-typescript-example&stack=fauna"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
 
-Example of using [FaunaDB](https://fauna.com/) with [Netlify functions](https://www.netlify.com/docs/functions/)
+Example of using [FaunaDB](https://fauna.com/) with [Netlify
+functions](https://www.netlify.com/docs/functions/) and TypeScript.
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Expand Table of Contents) -->
 <details>
@@ -33,80 +34,93 @@ This application is using [React](https://reactjs.org/) for the frontend, [Netli
 
 Click the [Deploy to Netlify Button](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/fauna-one-click&stack=fauna)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-faunadb-example&stack=fauna)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ctjlewis/netlify-fauna-typescript-example&stack=fauna)
 
-## Setup & Run Locally
+## Setup
 
-1. Clone down the repository
+### 1. Clone the repository and install dependencies with `yarn`
 
-    ```bash
-    git clone https://github.com/netlify/netlify-faunadb-example.git
-    ```
+#### Clone the repository
+```bash
+git clone https://github.com/ctjlewis/netlify-fauna-typescript-example.git
+```
 
-2. Enter the repo directory
+#### Enter project directory
 
-    ```bash
-    cd netlify-faunadb-example
-    ```
+```bash
+cd netlify-fauna-typescript-example
+```
 
-3. Install the dependencies
+#### Install dependencies
+```bash
+yarn
+```
 
-    ```bash
-    npm install
-    ```
+### 2. Sign up for a FaunaDB account
 
-4. Sign up for a FaunaDB account
+https://dashboard.fauna.com/accounts/register
 
-    https://dashboard.fauna.com/accounts/register
+### 3. Create a database
 
-5. Create a database
+In the Fauna Cloud Console:
+  - Click “New Database”
+  - Enter “Netlify” as the “Database Name”
+  - Click “Save”
 
-    In the Fauna Cloud Console:
-    - Click “New Database”
-    - Enter “Netlify” as the “Database Name”
-    - Click “Save”
+### 4. Create a database access key
 
-6. Create a database access key
+In the Fauna Cloud Console:
+  - Click “Security” in the left navigation
+  - Click “New Key”
+  - Make sure that the “Database” field is set to “Netlify”
+  - Make sure that the “Role” field is set to “Admin”
+  - Enter “Netlify” as the “Key Name”
+  - Click “Save”
 
-    In the Fauna Cloud Console:
-    - Click “Security” in the left navigation
-    - Click “New Key”
-    - Make sure that the “Database” field is set to “Netlify”
-    - Make sure that the “Role” field is set to “Admin”
-    - Enter “Netlify” as the “Key Name”
-    - Click “Save”
+Copy the secret key and paste it into the `.env` file as described below. **You
+won't get to see it again!**
 
-7. Copy the database access key’s secret
+### 5. Configure local database access
 
-    Save the secret somewhere safe; you won’t get a second chance to see it.
+Create a file called `.env`, which `netlify dev` will load automatically,
+and use it to set the necessary environment variables:
 
-8. Set your database access secret in your terminal environment
+```bash 
+FAUNADB_SERVER_SECRET="YOUR_SERVER_SECRET_HERE"
+```
 
-    In your terminal, run the following command:
+### 6. Bootstrap your FaunaDB collection and indexes
 
-    ```bash 
-    export FAUNADB_SERVER_SECRET=YourFaunaDBSecretHere
-    ```
+This will create the necessary database schema and sync it with FaunaDB.
 
-    Replace `YourFaunaDBSecretHere` with the value of the secret that you copied in the previous step.
+```bash
+yarn bootstrap
+```
 
-9. Bootstrap your FaunaDB collection and indexes
+### 7. Start developing!
 
-    ```bash
-    npm run bootstrap
-    ```
+The TypeScript files in `functions/` are built using `netlify-lambda build
+functions/`, and `netlify lambda serve functions/` watches for changes and
+refreshes the server as needed. 
 
-10. Run project locally
+```bash
+# in one terminal, watch for TS changes
+yarn watch
+```
 
-    ```bash
-    npm start
-    ```
+Once the TS files are being watched for changes, run `netlify dev` to serve the
+project.
+
+```bash
+# in a separate terminal, serve the project
+netlify dev
+```
 
 ## TLDR; Quick Deploy
 
-1. Click the [Deploy to Netlify button](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-faunadb-example)
+1. Click the [Deploy to Netlify button](https://app.netlify.com/start/deploy?repository=https://github.com/ctjlewis/netlify-fauna-typescript-example)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-faunadb-example)
+    [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ctjlewis/netlify-fauna-typescript-example)
 
 2. Click “Connect to GitHub”. Authorize Netlify, when asked.
 
@@ -170,7 +184,7 @@ To setup a FaunaDB account and get the API key we'll use to scaffold out our tod
 
     ![Name the fauna key and create](https://user-images.githubusercontent.com/6691035/69237999-86854880-0b5c-11ea-8e95-6d242a6e5f51.png)
 
-4. **Copy this API key for later use, or use the [Deploy to Netlify Button](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/netlify-faunadb-example) and plugin this API key.**
+4. **Copy this API key for later use, or use the [Deploy to Netlify Button](https://app.netlify.com/start/deploy?repository=https://github.com/ctjlewis/netlify-fauna-typescript-example) and plugin this API key.**
 
     ![Copy API key for future use](https://user-images.githubusercontent.com/6691035/69238071-addc1580-0b5c-11ea-80ce-8aa894875008.png)
 
@@ -187,7 +201,7 @@ To setup a FaunaDB account and get the API key we'll use to scaffold out our tod
 
     Replace `YourFaunaDBSecretHere` with the value of the secret that you copied in the previous step.
 
-    Add the [/scripts/bootstrap-fauna-database.js](https://github.com/netlify/netlify-faunadb-example/blob/f965df497f0de507c2dfdb1a8a32a81bbd939314/scripts/bootstrap-fauna-database.js) to the root directory of the project. This is an idempotent script that you can run one million times and have the same result (one todos database)
+    Add the [/scripts/bootstrap-fauna-database.js](https://github.com/ctjlewis/netlify-fauna-typescript-example/blob/f965df497f0de507c2dfdb1a8a32a81bbd939314/scripts/bootstrap-fauna-database.js) to the root directory of the project. This is an idempotent script that you can run one million times and have the same result (one todos database)
 
     Next up, add the bootstrap command to npm scripts in your `package.json` file
 
@@ -429,7 +443,7 @@ Requests to `/.netlify/function/[Function-File-Name]` will work seamlessly on lo
 
 We will be skipping over the rest of the frontend parts of the app because you can use whatever framework you'd like to build your application.
 
-All the demo React frontend code is [available here.](https://github.com/netlify/netlify-faunadb-example/tree/17a9ba47a8b1b2408b68e793fba4c5fd17bf85da/src)
+All the demo React frontend code is [available here.](https://github.com/ctjlewis/netlify-fauna-typescript-example/tree/17a9ba47a8b1b2408b68e793fba4c5fd17bf85da/src)
 
 ### 5. Finishing the backend Functions
 

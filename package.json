@@ -16,7 +16,8 @@
     "docs": "md-magic --path '**/*.md' --ignore 'node_modules'",
     "start": "react-scripts start",
     "prebuild": "tsc --noEmit functions/**/*.ts",
-    "build": "react-scripts build"
+    "build": "netlify-lambda build functions && react-scripts build",
+    "watch": "netlify-lambda serve functions"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
