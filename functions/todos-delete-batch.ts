@@ -1,11 +1,12 @@
 /* Import faunaDB sdk */
-const faunadb = require('faunadb')
+import { Context } from 'aws-lambda'
+import faunadb from 'faunadb'
 const q = faunadb.query
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context: Context) => {
   /* configure faunaDB Client with our secret */
   const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SERVER_SECRET
+    secret: process.env.FAUNADB_SERVER_SECRET || ''
   }) 
   const data = JSON.parse(event.body)
   console.log('data', data)

@@ -1,8 +1,8 @@
 /* bootstrap database in your FaunaDB account */
-const faunadb = require('faunadb')
-const chalk = require('chalk')
-const insideNetlify = insideNetlifyBuildContext()
+import chalk from 'chalk'
+import faunadb from 'faunadb'
 const q = faunadb.query
+const insideNetlify = insideNetlifyBuildContext()
 
 console.log(chalk.cyan('Creating your FaunaDB Database...\n'))
 

@@ -1,17 +1,17 @@
-/* Import faunaDB sdk */
-const faunadb = require('faunadb')
-const getId = require('./utils/getId')
+import { getId } from './utils/getId'
+import faunadb from 'faunadb'
+import { Context } from 'aws-lambda'
 const q = faunadb.query
 
-
-exports.handler = async (event, context) => {
+export const handler = (event, context: Context) => {
   /* configure faunaDB Client with our secret */
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET
   }) 
+  const data = JSON.parse(event.body)
   const id = getId(event.path)
-  console.log(`Function 'todo-delete' invoked. delete id: ${id}`)
-  return client.query(q.Delete(q.Ref(`classes/todos/${id}`)))
+  console.log(`Function 'todo-update' invoked. update id: ${id}`)
+  return client.query(q.Update(q.Ref(`classes/todos/${id}`), {data}))
     .then((response) => {
       console.log('success', response)
       return {

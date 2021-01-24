@@ -1,16 +1,16 @@
 /* Import faunaDB sdk */
-const faunadb = require('faunadb')
+import { Context } from 'aws-lambda'
+import faunadb from 'faunadb'
 const q = faunadb.query
 
-
-exports.handler = (event, context) => {
+export const handler = (event, context: Context) => {
   console.log('Function `todo-read-all` invoked')
   /* configure faunaDB Client with our secret */
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET
   }) 
   return client.query(q.Paginate(q.Match(q.Ref('indexes/all_todos'))))
-    .then((response) => {
+    .then((response: {[key: string]: any}) => {
       const todoRefs = response.data
       console.log('Todo refs', todoRefs)
       console.log(`${todoRefs.length} todos found`)
